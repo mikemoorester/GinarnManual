@@ -1,0 +1,16 @@
+\chapter{Kalman Filtering}
+\label{ch:kalman_filter}
+%
+Since GPS-IIR-M (so also including IIF and III) the GPS satellites have had programmable power output capabilities. It says this means that individual signal components can therefore transmit above previously stated maximum (http://www.gps.gov/technical/icwg/IS-GPS-200J.pdf )
+
+The mechanism by which the flew power is activated is not outlined in that document though. I would need to do some further digging.
+
+From what I can see, other constellations do not have this programmable variation, i.e. the power output is static (at least designed to be static, I assume it may change a bit over time)
+
+GLONASS seems to have much greater variation in the total power output within a certain generation (i.e. different satellites in a given generation will vary by 10’s of watts. The power output of L1 and L2 frequencies will also differ with gradation of low/medium/high. This is covered in that paper (1) I shared with you previously, but this is a good summary: http://acc.igs.org/repro3/TX\_Power\_20190711.pdf
+
+Galileo also has some variation in signal outputs across the In-Orbit Validation (IOV) satellites although I believe the Full Operational Capability (FOC) satellites are supposed to be constant. According to the 2018 Steigenberger (1) paper I shared with you previously the power range for IOV sats is 95 - 134 W, and FOC sats is 254 - 273 W. However, these are designed to be constant in their output: https://www.gps.gov/governance/advisory/meetings/2019-11/bar-sever.pdf
+
+For Beidou or QZSS I haven’t read of any other flex-power type modulations either.
+
+(1) https://doi.org/10.1007/s00190-017-1082-2

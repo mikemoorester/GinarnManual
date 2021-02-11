@@ -1,0 +1,81 @@
+\chapter{PEA examples}
+\label{ch:pea_examples}
+
+
+\section{Example 01 - Use PPP to Process GPS Data}
+In this example we will process 24 hours of data from a permanent reference frame station. The algorithm that will be use an L1+L2 and L1+L5 ionosphere free combination. The log files and processing results can be found in /data/acs/pea/output/exs/EX01_IF/.
+
+$ ./pea --config ../../config/Ex01-IF-PPP.yaml
+
+$ grep "\$POS" /data/acs/pea/output/exs/EX01_IF/EX01_IF-ALIC.TRACE
+And you should see the following: <snip> $POS,2062,431940.000,0,-4052052.7956,4212836.0144,-2545104.6423,0.00000043966020,0.00000039738502,0.00000013421476 $POS,2062,431970.000,0,-4052052.7956,4212836.0144,-2545104.6423,0.00000043965772,0.00000039738393,0.00000013421667
+
+For more information on running the pea in ppp mode see docs/PPPExamples.md
+
+\section{Example 02 Processing a Global Network to obtain satellite clock products}
+In this example 24 hours of data from a small global network of 87 stations is processed to obtain the clock products needed for high precision positioning.
+
+Check that the paths in the configuration file for the products and RINEX files are correct for your system. If you have followed the convention layed out in the INSTALL.md document you should not need to amend anything.
+
+To start the processing use the command:
+
+$ ./pea --config ../../config/Ex02-Network.yaml
+The process will take approximatelly 2-3 hours to complete depending on CPU performance. The log files and processing results can be found in /data/acs/pea/output/examples/Ex02, or the alternative directory you have specified in the configuration file.
+
+Change into your output directory. You should find a .TRACE file for each station processed, and a PEA.SUM file.
+
+$ cd /data/acs/pea/output/examples/Ex02
+To verify your solution, first grep for the xp values:
+
+$ grep 'network xp' netprocessing.out > xp_test.txt
+and then run:
+
+$ python3 /data/acs/pea/python/src/comprun.py --test /data/acs/output/xp_test.txt --standard /data/acs/pea/example/EX02/standard/xp_standard.txt
+This will produce the plots Posdiff.png, recclk.png, satclk.png, and zwd.png.
+
+\section{Example 03 Processing a Global Network to obtain the orbit and clock products}
+In this example 24 hours of data from a small global network of 87 stations is processed to obtain the orbit and clock products needed for high precision positioning.
+
+Check that the paths in the configuration file for the products and RINEX files are correct for your system. If you have followed the convention layed out in the INSTALL.md document you should not need to amend anything.
+
+To start the processing use the command:
+
+$ ./pea --config ../../config/Ex03-Network_Orbits.yaml
+The process will take approximatelly 2-3 hours to complete depending on CPU performance. The log files and processing results can be found in /data/acs/pea/output/examples/Ex03, or the alternative directory you have specified in the configuration file.
+
+Change into your output directory. You should find a .TRACE file for each station processed, and a PEA.SUM file.
+
+$ cd /data/acs/pea/output/examples/Ex03
+To verify your solution, first grep for the xp values:
+
+$ grep 'network xp' netprocessing.out > xp_test.txt
+and then run:
+
+$ python3 /data/acs/pea/python/src/comprun.py --test /data/acs/output/xp_test --standard /data/acs/pea/example/EX03/standard/xp_standard.txt
+This will produce the plots Posdiff.png, recclk.png, satclk.png, and zwd.png.
+
+To compare the satellite clocks run:
+
+$ python3 /data/acs/pea/python/src/compareclk.py --standard /data/acs/pea/example/EX03/standard/aus20624.clk  --test ./aus20624.clk
+This will produce plots for the differences in satellite clocks G02 through to G32 as well as calculating the RMS and standard deviation with respect to the standard. G01.png does not exists at this has been used as the pivot satellite clock that we use to remove the bias from.
+
+\section{Example 04 Processing a Global Network to obtain Ionospheric Vertical Total Electron Content (VTEC) Maps}
+In this example 24 hours of data from a small global network of 87 stations is processed to obtain the IONEX formatted Ionosphere VTEC maps and SINEX formatted satellite Diferential Signal Biases (DSB). Ionospheric VTEC maps follows the IONEX 1.1 format, which can be found in: https://gssc.esa.int/wp-content/uploads/2018/07/ionex11.pdf The satellite bias follows the bias-SINEX format, which can be found in: http://ftp.aiub.unibe.ch/bcwg/format/draft/sinex_bias_100_dec07.pdf
+
+Check that the paths in the configuration file for the products and RINEX files are correct for your system. If you have followed the convention layed out in the INSTALL.md document you should not need to amend anything.
+
+To start the processing use the command:
+
+$ ./pea --config <installation directory>/pea/config/Ex04-Ionosphere.yaml
+The process will take approximatelly 1-2 hours to complete depending on CPU performance and setting specifications.
+
+The IONEX and bias-SINEX files can then be used to obtain SPP and PPP positioning solutions as specified in PPPExamples.md
+
+A utility to plot the TEC values in an IONEX file have can be found at:
+
+<installation dirctory>/pea/python/source/plotIONEX.py
+This utility will ask for the path/filename of the IONEX file and a start and stop time in hhmmss format. The Python code will then generate a figure in IONEX_yyyy-mm-dd_hh:mm:ss.png format for each entry between the start and stop time.
+
+\section{Example 05 Real-time}
+
+\newthought{The PEA} is designed to do some stuff.
