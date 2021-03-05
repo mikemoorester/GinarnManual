@@ -80,6 +80,10 @@ Tzupang Tseng
 \usepackage{fancyvrb}
 \fvset{fontsize=\normalsize}
 
+\usepackage{tikz}
+%\usetikzlibrary{external}
+%\tikzexternalize[prefix=tikz/]
+\usetikzlibrary{shapes.geometric, arrows}
 %%
 % Prints argument within hanging parentheses (i.e., parentheses that take
 % up no horizontal space).  Useful in tabular environments.
@@ -307,9 +311,9 @@ under the License.\index{license}
 %\include{implementation overview of software}
 % block diagram from aaron
 %
-\include{PEA_Examples}
+\include{pea_examples}
 %
-\include{POD_examples}
+\include{pod_examples}
 %
 % Start the main matter (normal chapters)
 \mainmatter
@@ -327,7 +331,7 @@ under the License.\index{license}
 %
 \include{ambiguity_resolution}
 %
-\include{styleguide}
+%\include{styleguide}
 %%
 % The back matter contains appendices, bibliographies, indices, glossaries, etc.
 \backmatter
